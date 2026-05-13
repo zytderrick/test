@@ -1,0 +1,76 @@
+modules {
+    module: "module/control_bootes.module"
+}
+
+host_ip: "192\\.168\\.1\\.([0-9]+)"
+
+topology {
+    enable_remote: true
+    config: "/opt/jidu_output/com_config/conf/topology_jidu_slave.config"
+}
+
+soa {
+    config: "/opt/jidu_output/com_config/conf/service_jidu_slave.config"
+}
+
+commlite {
+    config: "/opt/jidu_output/com_config/conf/commlite_jidu_slave.config"
+}
+
+executor {
+    thread_pool_size: 50
+}
+
+broker {
+    inter_type: COMM_EXTEND_SHM
+    remote_type: COMM_ADDS
+}
+
+log {
+    enable: true
+    dir: "/opt/log/jidu_output/auto_delivery/auto_delivery_pnc/control"
+    prefix: "control"
+    level: INFO
+    console: false
+
+    framework {
+        name: "SlaTrack"
+        level: FATAL
+    }
+    framework {
+        name: "ADDS_RTPS"
+        level: FATAL
+    }
+    framework {
+        name: "Framwork"
+        level: ERROR
+    }
+    framework {
+        name: "Node"
+        level: ERROR
+    }
+    framework {
+        name: "Service"
+        level: ERROR
+    }
+    framework {
+        name: "Communication"
+        level: ERROR
+    }
+    framework {
+        name: "Executor"
+        level: ERROR
+    }
+    framework {
+        name: "Topology"
+        level: ERROR
+    }
+    framework {
+        name: "ADDS_DCPS"
+        level: ERROR
+    }
+    framework {
+        name: "FunctionSafety"
+        level: ERROR
+    }
+}

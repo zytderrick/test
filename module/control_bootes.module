@@ -1,0 +1,6 @@
+library: "libcontrol.so",
+component: {
+  name: "ControlComponent"
+  class_name: "ControlComponent"
+  config: "conf/pnc_bootes_slave.conf"
+}

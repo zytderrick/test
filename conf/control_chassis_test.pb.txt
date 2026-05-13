@@ -1,0 +1,197 @@
+enable_test: DISABLE_TEST
+lon_stand_still_test {
+  acc_init: 0.0
+  acc_resolution: 0.01
+  t_hold: 3.0
+  v_threshold: 1.0
+}
+lon_idle_test {
+  t_init: 10.0
+  acc_resolution: 0.01
+  t_hold: 3.0
+  v_threshold: 2.0
+}
+lon_step_test {
+  lon_step_test_detail {
+    v_target: 5.0
+    t_gap: 5.0
+    acc_step: 0.5
+  }
+  lon_step_test_detail {
+    v_target: 10.0
+    t_gap: 5.0
+    acc_step: 0.5
+  }
+  lon_step_test_detail {
+    v_target: 20.0
+    t_gap: 5.0
+    acc_step: 0.5
+  }
+  lon_step_test_detail {
+    v_target: 30.0
+    t_gap: 5.0
+    acc_step: 0.5
+  }
+  lon_step_test_detail {
+    v_target: 20.0
+    t_gap: 5.0
+    acc_step: -0.5
+  }
+  lon_step_test_detail {
+    v_target: 10.0
+    t_gap: 5.0
+    acc_step: -0.5
+  }
+  lon_step_test_detail {
+    v_target: 5.0
+    t_gap: 5.0
+    acc_step: -0.5
+  }
+  lon_step_test_detail {
+    v_target: 0.0
+    t_gap: 5.0
+    acc_step: -0.5
+  }
+}
+lon_sinusoid_test {
+  t_init: 5.0
+  acc_amplitude: 0.5
+  lon_sinusoid_test_detail {
+    t_period: 3.0
+    cycle_num: 3
+  }
+  lon_sinusoid_test_detail {
+    t_period: 5.0
+    cycle_num: 3
+  }
+}
+lat_stand_still_test {
+  steer_resolution: 0.1
+  steer_init: 0.0
+  t_hold: 3.0
+  t_init: 3.0
+  steer_threshold: 10.0
+}
+lat_step_test {
+  t_reset: 3.0
+  t_hold: 4.0
+  direction: TURN_RIGHT
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 2.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 4.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 6.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 10.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 15.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 60.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 90.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 180.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 270.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 360.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+  lat_step_test_detail {
+    steer_angle: 420.0
+  }
+  lat_step_test_detail {
+    steer_angle: 0.0
+  }
+}
+lat_sinusoid_test {
+  t_period: 3
+  t_reset: 3
+  steer_reset: 0.0
+  lat_sinusoid_test_detail {
+    steer_amplitude: 2.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 4.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 6.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 10.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 15.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 60.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 90.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 180.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 270.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 360.0
+    cycle_num: 3
+  }
+  lat_sinusoid_test_detail {
+    steer_amplitude: 420.0
+    cycle_num: 3
+  }
+}

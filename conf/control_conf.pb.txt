@@ -1,0 +1,1506 @@
+enable_csv_debug: false
+enable_controller_csv_debug: false
+
+control_period: 0.02
+max_control_interval_sec: 0.1
+enable_localization_speed: true
+enable_compensatory_acceleration: false
+
+driving_mode: COMPLETE_AUTO_DRIVE
+soft_estop_brake: 50.0
+hard_estop_brake: 65.0
+
+controller_config {
+  lat_init: KIN_MPC_CONTROLLER
+  lat_backup: GEO_LAT_CONTROLLER
+  lon_init: KIN_MPC_CONTROLLER
+  lon_backup: PID_SPEED_CONTROLLER
+}
+
+post_process_conf{
+  enable_standstill_steering: true
+  enable_planning_driveoff_cmd: false
+  enable_standstill_driveoff_cmd: false
+  enable_terminal_status_reaction: true
+  standstill_swa_gain_limit: 360
+  soft_brake_acc: -3.0
+  hold_brake_acc: -0.55
+  lat_cmd_post_process_conf{
+    enable_lat_post_process: true
+    steer_cmd_deg_cut_off: 5
+  }
+  lon_cmd_post_process_conf{
+    enable_lon_post_process: true
+    enable_lon_pitch_compensation: false
+    pitch_activate_threshold_deg: 5.0
+    enable_lon_acc_limit_mode: true
+    acc_lower_limit: -4.9
+    acc_upper_limit: 2.5
+  }
+  terminal_process_steer_torque_vector_size: 20
+  terminal_process_steady_steer_angle_list_size: 30
+  terminal_process_steer_torque_mean_dz: 0.05
+  terminal_process_steer_torque_std_max: 0.02
+  terminal_process_steady_steer_angle_deg_max: 5
+  terminal_process_swa_hold_list_size: 50
+  steer_ratio_scheduler{
+    scheduler{
+      steering_torque: -0.1
+      ratio: 200.0
+    }
+    scheduler{
+      steering_torque: -0.05
+      ratio: 200.0
+    }
+    scheduler{
+      steering_torque: 0.0
+      ratio: 0.0
+    }
+    scheduler{
+      steering_torque: 0.15
+      ratio: 50.0
+    }
+    scheduler{
+      steering_torque: 0.2
+      ratio: 50.0
+    }
+    scheduler{
+      steering_torque: 0.25
+      ratio: 50.0
+    }
+    scheduler{
+      steering_torque: 0.3
+      ratio: 50.0
+    }
+    scheduler{
+      steering_torque: 0.35
+      ratio: 50.0
+    }
+    scheduler{
+      steering_torque: 0.4
+      ratio: 50.0
+    }
+    scheduler{
+      steering_torque: 0.45
+      ratio: 50.0
+    }
+    scheduler{
+      steering_torque: 0.5
+      ratio: 100.0
+    }
+    scheduler{
+      steering_torque: 0.55
+      ratio: 100.0
+    }
+    scheduler{
+      steering_torque: 0.6
+      ratio: 100.0
+    }
+    scheduler{
+      steering_torque: 0.65
+      ratio: 100.0
+    }
+    scheduler{
+      steering_torque: 0.7
+      ratio: 100.0
+    }
+  }
+}
+
+geo_lat_controller_conf {
+  use_interpolate_in_low_speed: true
+  low_speed: 11.11
+  high_speed: 30.56
+  high_speed_kp: 0.95
+  maximum_lookahead_distance: 40.0
+  high_speed_minimum_lookahead_distance: 10.0
+  low_speed_minimum_lookahead_distance: 4.0
+  low_ratio: 2.0
+  smooth_vel_delta: 5.56
+  med_ratio: 1.75
+  high_ratio: 1.75
+  minimum_ratio: 1.0
+  target_steer_angle_max: 720.0
+  low_speed_kp: 1.0
+  steer_delta_limit: 100.0
+  curve25_maximum_lookahead_distance: 3.0
+  curve100_maximum_lookahead_distance: 5.0
+  curve200_maximum_lookahead_distance: 8.0
+  curve500_maximum_lookahead_distance: 15.0
+  curve800_maximum_lookahead_distance: 30.0
+}
+
+lqr_controller_conf {
+  eps: 0.01
+  cutoff_freq: 10
+  mean_filter_window_size: 10
+  max_iteration: 150
+  use_backward_model: true
+  enable_ff_angle_error: true
+  enable_lqr_warm_start: true
+  forward_paras {
+    vel: 0.3
+    matrix_q: 1.0
+    matrix_q: 0.01
+    matrix_q: 1.0
+    matrix_q: 0.01
+    matrix_r: 4.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 2.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 0.8
+    matrix_q: 0.4
+    matrix_q: 0.00
+    matrix_q: 1.0
+    matrix_q: 0.005
+    matrix_r: 2.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 2.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 1.5
+    matrix_q: 1.6
+    matrix_q: 0.006
+    matrix_q: 0.2
+    matrix_q: 0.01
+    matrix_r: 1.0
+    feedforward_ratio: 2.5
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 2.0
+    matrix_q: 1.6
+    matrix_q: 0.006
+    matrix_q: 0.2
+    matrix_q: 0.01
+    matrix_r: 1.0
+    feedforward_ratio: 2.5
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 3.0
+    matrix_q: 0.4
+    matrix_q: 0.005
+    matrix_q: 1.0
+    matrix_q: 0.005
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 4.0
+    matrix_q: 0.4
+    matrix_q: 0.005
+    matrix_q: 1.0
+    matrix_q: 0.005
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 5.5
+    matrix_q: 0.4
+    matrix_q: 0.005
+    matrix_q: 1.0
+    matrix_q: 0.005
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 7.0
+    matrix_q: 0.16
+    matrix_q: 0.005
+    matrix_q: 1.0
+    matrix_q: 0.006
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 8.0
+    matrix_q: 0.1
+    matrix_q: 0.005
+    matrix_q: 1.0
+    matrix_q: 0.006
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 10.0
+    matrix_q: 0.1
+    matrix_q: 0.005
+    matrix_q: 1.0
+    matrix_q: 0.006
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 12.5
+    matrix_q: 0.1
+    matrix_q: 0.005
+    matrix_q: 1.1
+    matrix_q: 0.006
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 15.0
+    matrix_q: 0.1
+    matrix_q: 0.005
+    matrix_q: 1.1
+    matrix_q: 0.006
+    matrix_r: 1.0
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+ forward_paras {
+    vel: 17.0
+    matrix_q: 0.005
+    matrix_q: 0.005
+    matrix_q: 0.01
+    matrix_q: 0.006
+    matrix_r: 1.0
+    feedforward_ratio: 0.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  forward_paras {
+    vel: 20.0
+    matrix_q: 0.0001
+    matrix_q: 0.0001
+    matrix_q: 0.002
+    matrix_q: 0.006
+    matrix_r: 1.0
+    feedforward_ratio: 0.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 10.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  backward_paras {
+    vel: 1.0
+    matrix_q: 0.05
+    matrix_q: 0.0
+    matrix_q: 1.0
+    matrix_q: 0.0
+    matrix_r: 0.1
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 1.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  parking_paras {
+    vel: 1.0
+    matrix_q: 0.05
+    matrix_q: 0.0
+    matrix_q: 1.0
+    matrix_q: 0.0
+    matrix_r: 0.1
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 1.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  parking_backward_paras {
+    vel: 1.0
+    matrix_q: 0.05
+    matrix_q: 0.0
+    matrix_q: 1.0
+    matrix_q: 0.0
+    matrix_r: 0.1
+    feedforward_ratio: 1.0
+    feedback_ratio: 1.0
+    steer_delta_limit: 1.0
+    lateral_preview_time: 0.1
+    min_preview_dis: 0.1
+    feedforward_preview_index: 2
+  }
+  tuning_mode: false
+}
+
+pid_speed_controller_conf {
+  enable_leadlag_compensation: false
+  enable_control_preview: false
+  brake_gain: 1.0
+  brake_compensation: 0.0
+  cutoff_freq: 10
+  slope_compensation_offset: 0.0
+  slope_compensation_switch: false
+  ramp_brake_switch: true
+  full_stop_length: 0.3
+  full_stop_length: 1.0
+  full_stop_length: 2.0
+  full_stop_length: 3.0
+  full_stop_accel: -0.2
+  parking_full_stop_length: 0.2
+  start_throttle: 20.0
+  start_speed_threshold: 0.2
+  enable_speed_bump_function: false
+  speed_bump_throttle: 60.0
+  station_error_limit: 2.0
+  speed_error_limit: 2.0
+  station_leadlag_conf {
+    innerstate_saturation_level: 1000
+    alpha: 1.0
+    beta: 1.0
+    tau: 0.0
+  }
+  speed_leadlag_conf {
+    innerstate_saturation_level: 1000
+    alpha: 1.0
+    beta: 1.0
+    tau: 0.0
+  }
+  backward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    vel: 1.0
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 0.0
+      ki: 0.0
+      kd: 0.0
+    }
+    vel: 0.3
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    vel: 0.8
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    vel: 1.5
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    vel: 2.0
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    vel: 3.0
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    vel: 4.0
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.3
+      kd: 0.0
+    }
+    vel: 5.5
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.25
+      kd: 0.0
+    }
+    vel: 7.0
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 1.0
+      ki: 0.2
+      kd: 0.0
+    }
+    vel: 8.0
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 0.2
+      ki: 0.0
+      kd: 0.0
+    }
+    vel: 10.0
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  forward_paras {
+    forsee_time: 0.1
+    forsee_min_distance: 0.2
+    speed_pid {
+      integrator_enable: true
+      integrator_saturation_level: 0.3
+      kp: 1.0
+      ki: 0.0
+      kd: 0.0
+    }
+    station_pid {
+      integrator_enable: false
+      integrator_saturation_level: 0.0
+      kp: 0.2
+      ki: 0.0
+      kd: 0.0
+    }
+    vel: 12.5
+    throttle_increase_delta: 2.0
+    throttle_decrease_delta: 2.0
+    brake_increase_delta: 2.0
+    brake_decrease_delta: 2.0
+  }
+  tuning_mode: false
+}
+
+dyn_mpc_controller_conf {
+  eps: 0.01
+  enable_single_point_mode: false
+  use_rate_as_gain:false
+  enable_augmented_timegrid: false
+  protect_low_speed: 2.0
+
+  max_iteration: 150
+  model_sample_time: 0.05
+  pred_horizon: 36
+
+  matrix_q: 1.0
+  matrix_q: 1.0
+  matrix_q: 6.0
+  matrix_q: 1.0
+  matrix_q: 0.0
+  matrix_q: 0.0
+  matrix_q: 0.0
+  matrix_q: 0.0
+
+  matrix_r: 4.0
+  matrix_r: 4.0
+  
+  brake_minimum_action: 0.1
+  throttle_minimum_action: 0.1
+  heading_offset: 0
+  step_gain: 0.05
+  target_drift_state {
+    linear_velocity: 5.0
+    linear_lateral_velocity: -2.0
+    yaw_rate: 0.55
+  }
+
+  acc_gain_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  steer_gain_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  x_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  y_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  theta_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  vx_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  vy_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  yaw_rate_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  acc_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+  delta_scheduler {
+    scheduler {
+      speed: 2.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 0.3
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 0.1
+    }
+  }
+}
+
+kin_mpc_controller_conf {
+  eps: 0.01
+  enable_augmented_timegrid: false
+  enable_self_speed_target: false
+  use_feedback_cmd_data: false
+  enable_direct_steer: true
+  steering_delay_index: 2
+  max_iteration: 150
+  base_conf {
+    matrix_q: 1.0
+    matrix_q: 1.0
+    matrix_q: 4.0
+    matrix_q: 2.0
+    matrix_q: 0.01
+
+    matrix_r: 4.0
+    matrix_r: 2.0
+  }
+
+  enable_mode_control: true
+  stop_conf {
+    matrix_q: 1.0
+    matrix_q: 1.0
+    matrix_q: 4.0
+    matrix_q: 128.0
+    matrix_q: 0.01
+
+    matrix_r: 1.0
+    matrix_r: 4.0
+  }
+
+  model_sample_time: 0.05
+  pred_horizon: 40
+  
+  brake_minimum_action: 0.1
+  throttle_minimum_action: 0.1
+
+  self_speed_target_mps: 0.8
+  acc_for_pause_control: -2.42
+  acc_for_standstill: -0.42
+
+  heading_offset: 0
+  step_gain: 0.05
+
+  acc_scheduler {
+    scheduler {
+      speed: -1.0
+      ratio: 2.4
+    }
+    scheduler {
+      speed: 0.2
+      ratio: 0.6
+    }
+    scheduler {
+      speed: 0.5
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 1.0
+      ratio: 1.4
+    }
+    scheduler {
+      speed: 2.5
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.2
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 3.0
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 40.0
+      ratio: 1.0
+    }
+  }
+  steer_gain_scheduler {
+    scheduler {
+      speed: -1.0
+      ratio: 0.8
+    }
+    scheduler {
+      speed: 0.2
+      ratio: 0.8
+    }
+    scheduler {
+      speed: 0.5
+      ratio: 0.8
+    }
+    scheduler {
+      speed: 1.0
+      ratio: 0.8
+    }
+    scheduler {
+      speed: 1.5
+      ratio: 0.32
+    }
+    scheduler {
+      speed: 2.0
+      ratio: 0.6
+    }
+    scheduler {
+      speed: 4.0
+      ratio: 0.4
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 6.0
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 8.0
+      ratio: 16.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 16.0
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 16.0
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 35.0
+      ratio: 100.0
+    }
+    scheduler {
+      speed: 40.0
+      ratio: 100.0
+    }
+  }
+  x_state_scheduler {
+    scheduler {
+      speed: 0.2
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 0.5
+      ratio: 12.0
+    }
+    scheduler {
+      speed: 1.0
+      ratio: 6.0
+    }
+    scheduler {
+      speed: 1.5
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 2.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 3.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 1.8
+    }
+    scheduler {
+      speed: 6.0
+      ratio: 1.8
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 1.8
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 30.0
+      ratio: 24.0
+    }     
+    scheduler {
+      speed: 35.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 40.0
+      ratio: 1.0
+    }
+  }
+  y_state_scheduler {
+    scheduler {
+      speed: 0.2
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 0.5
+      ratio: 12.0
+    }
+    scheduler {
+      speed: 1.0
+      ratio: 6.0
+    }
+    scheduler {
+      speed: 1.5
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 2.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 3.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 6.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 2.0
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 30.0
+      ratio: 24.0
+    }        
+    scheduler {
+      speed: 35.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 40.0
+      ratio: 1.0
+    } 
+  }
+  theta_state_scheduler {
+    scheduler {
+      speed: 0.2
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 0.5
+      ratio: 8.0
+    }
+    scheduler {
+      speed: 1.0
+      ratio: 4.0
+    }
+    scheduler {
+      speed: 1.5
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 2.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 3.0
+      ratio: 1.5
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 2.5
+    }
+    scheduler {
+      speed: 6.0
+      ratio: 2.5
+    } 
+    scheduler {
+      speed: 10.0
+      ratio: 2.5
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 30.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 35.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 40.0
+      ratio: 1.0
+    }
+  }
+  speed_state_scheduler {
+    scheduler {
+      speed: 0.2
+      ratio: 0.05
+    }
+    scheduler {
+      speed: 0.5
+      ratio: 0.05
+    }
+    scheduler {
+      speed: 1.0
+      ratio: 0.1
+    }
+    scheduler {
+      speed: 2.5
+      ratio: 0.05
+    }
+    scheduler {
+      speed: 5.0
+      ratio: 0.05
+    }
+    scheduler {
+      speed: 10.0
+      ratio: 0.05
+    }
+    scheduler {
+      speed: 15.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 20.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 1.0
+    }
+  }
+  steer_state_scheduler {
+    scheduler {
+      speed: 0.1
+      ratio: 0.005
+    }
+    scheduler {
+      speed: 2.0
+      ratio: 1.0
+    }
+    scheduler {
+      speed: 25.0
+      ratio: 1.0
+    }
+     scheduler {
+      speed: 30.0
+      ratio: 1.0
+    }
+     scheduler {
+      speed: 50.0
+      ratio: 0.5
+    }
+  }
+}
+
+diag_v2_conf {
+  # switch
+  enable_actuator_check: true
+  enable_curvature_check: false
+  enable_localization_jump_check: true
+  enable_localization_continuous_check: false
+  enable_trajectory_xytheta_check: false
+  enable_trajectory_longitudinal_check: false
+  enable_trajectory_interframe_check: false
+  
+  # paras
+  frames_jump_timestamp_check: 25
+
+  trajectory_check_conf{
+    max_planning_interval_sec: 0.5
+    trajectory_point_size_threshold: 20
+    trajectory_continuous_check_duration: 20
+    trajectory_xy2theta_check_threshold: 0.2
+    trajectory_innerframe_check_max_point_size: 40
+    trajectory_longitudinal_check_diff_threshold: 0.02
+    enable_interframe_check_if_replan: false
+    trajectory_interframe_check_max_point_size: 20
+    trajectory_interframe_check_max_xy_threshold: 0.05
+    trajectory_interframe_check_max_theta_threshold:0.02
+    trajectory_interframe_check_max_v_threshold: 0.1
+    trajectory_interframe_check_max_a_threshold: 0.05
+    trajectory_interframe_check_max_kappa_threshold: 0.01
+  }
+
+  localization_check_conf{
+    max_loc_interval_sec : 0.4
+
+    #Bad distance
+    trajectory_localization_distance_threshold: 3.0
+
+    #LocalizationNotJump
+    localization_permit_distance_error_first_threshold: 0.2
+    localization_permit_distance_error_second_threshold: 0.5
+    localization_permit_heading_error_threshold: 0.05
+    localization_jump_accumulated_error_duration: 20
+    localization_jump_accumulated_distance_error_threshold: 2.0
+    localization_jump_station_error_threshold: 0.2
+    localization_jump_lateral_error_threshold: 0.03
+
+    #localization continuous abnormal check
+    localization_continuous_check_duration: 20
+    localization_check_continuous_jump_duration: 20
+    localization_check_continuous_jump_threshold: 10
+    localization_jump_first_level_speed_multiplier: 2
+    localization_jump_second_level_speed_multiplier: 10.0
+  }
+
+  chassis_check_conf{
+    max_chassis_interval_sec : 0.3
+    chassis_continuous_check_duration: 20
+    chassis_velocity_check_duration: 20
+    chassis_velocity_check_deadzone: 0.15
+    chassis_velocity_check_threshold_ratio: 0.1
+    chassis_velocity_check_threshold: 0.8
+    enable_using_raw_localization_velocity: true
+  }
+
+  diagnosis_command_post_process_conf{
+    limit_control_command_continuous_abnormal: 10
+    enable_control_estop_hold: true
+  }
+
+  actuator_check_conf{
+    long_check_length: 8
+    acc_diff_threshold: 0.8
+    gear_check_length: 120
+    steer_check_length: 200
+    swa_diff_threshold_deg: 30
+    enable_steer_check: true
+    enable_steer_offset_check: false
+    enable_acc_check: false
+    enable_gear_check: true
+    enable_chassis_ready_check: true
+    chassis_ready_wait_time_sec: 10.0
+    padmsg_response_driving_mode_list_length: 250
+  }
+}
+
+control_preprocess_conf {
+  virtual_sensors_conf {
+    cutoff_frequency: 0.5
+    mean_filter_window_size: 10
+    standstill_preview_index: 10
+    swa_reach_judge_size: 80
+    swa_reach_hold_size: 260
+    enable_kf_loc_speed: false
+    enable_chassis_standstill: false
+    revise_percentage_max_steer_angle_deg: 442
+    enable_standstill_swa_filter: true
+    time_source: LOC_HEADER_TIME
+    kf_conf {
+      noise_cov: 0.0
+      noise_cov: 0.0
+      noise_cov: 0.0
+      noise_cov: 0.0
+      noise_cov: 0.0
+      noise_cov: 0.0
+    }
+  }
+  log_trajectory_file_conf{
+    trajectory_log_period: 20
+    trajectory_log_length: 100
+    enable_logtrajectory_find_nearest_point: false
+  }
+  noise_generator_conf{
+    noise_localization_xy: 0.2
+    noise_localization_yaw: 3
+  }
+}

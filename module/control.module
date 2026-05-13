@@ -1,0 +1,5 @@
+library: "libcontrol.so",
+component: {
+  name: "ControlComponent"
+  class_name: "ControlComponent"
+}

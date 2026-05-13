@@ -1,0 +1,60 @@
+modules {
+    module: "module/control.module"
+}
+
+messages {
+    message: "message/message_buffer.config"
+}
+
+topology {
+    enable_remote: true
+}
+
+log {
+    enable: true
+    dir: "log/control"
+    prefix: "control"
+    level: INFO
+    console: true
+
+    framework {
+        name: "SlaTrack"
+        level: FATAL
+    }
+    framework {
+        name: "ADDS_RTPS"
+        level: FATAL
+    }
+    framework {
+        name: "Framwork"
+        level: ERROR
+    }
+    framework {
+        name: "Node"
+        level: ERROR
+    }
+    framework {
+        name: "Service"
+        level: ERROR
+    }
+    framework {
+        name: "Communication"
+        level: ERROR
+    }
+    framework {
+        name: "Executor"
+        level: ERROR
+    }
+    framework {
+        name: "Topology"
+        level: ERROR
+    }
+    framework {
+        name: "ADDS_DCPS"
+        level: ERROR
+    }
+    framework {
+        name: "FunctionSafety"
+        level: ERROR
+    }
+}
